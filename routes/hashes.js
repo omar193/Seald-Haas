@@ -3,7 +3,7 @@ const router = require('express-promise-router')();
 
 
 const { validateBody, schemas } = require('../helpers/routeHelpers');
-const UsersController = require('../controllers/users');
+const HashesController = require('../controllers/hashes');
 const passport = require('passport');
 const passportConf=require('../passport');
 
@@ -11,14 +11,10 @@ const passportSignIn = passport.authenticate('local', { session: false });
 const passportJWT = passport.authenticate('jwt', { session: false });
 
 
-router.route('/signup')
-  .post( validateBody(schemas.authSchema),UsersController.signUp);
+router.route('/calculateHash')
+  .post( validateBody(schemas.hashSchema),HashesController.calculateHash);
 
-router.route('/signin')
-  .post( validateBody(schemas.authSchema),passportSignIn, UsersController.signIn);
- 
-
-router.route('/secret')
-  .get(passportJWT,UsersController.secret);
+router.route('/generateDummyHash')
+  .get(HashesController.generateDummyHash);
 
 module.exports = router;

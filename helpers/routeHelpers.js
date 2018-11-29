@@ -18,6 +18,13 @@ module.exports = {
     authSchema: Joi.object().keys({
       username: Joi.string().required(),
       password: Joi.string().required()
-    })
-  }
+    }),
+    hashSchema: Joi.object().keys({
+      data: Joi.string().required(),
+      algorithm: Joi.string().required(),
+      iteration: Joi.number().required()
+    }),
+
+  },
+
 }

@@ -3,12 +3,13 @@ const JwtStrategy = require('passport-jwt').Strategy;
 const { ExtractJwt } = require('passport-jwt');
 const config = require('./configuration');
 const User = require('./models/user');
+const Hash = require('./models/hash');
 const LocalStrategy = require('passport-local').Strategy;
 
 
 passport.use(new JwtStrategy({
     jwtFromRequest: ExtractJwt.fromHeader('authorization'),
-    secretOrKey: config.JWT_SECRET
+    secretOrKey:  config.JWT_SECRET
   }, async (payload, done) => {
     try {
         // Find the user specified in token
@@ -52,7 +53,25 @@ passport.use(new LocalStrategy({
     } catch(error) {
       done(error, false);
     }
+  }));
 
+  passport.use(new LocalStrategy({
+    usernameField: 'data'
+  }, async (data, algorithm,iteration, done) => {
+
+    try {
+      // Find the user given the username
+      const hash = await Hash.findOne({ data });
+      
+      // If not, handle it
+      if (!hash) {
+        return done(null, false);
+      }
+  
     
-     
+      // Otherwise, return the user
+      done(null, hash);
+    } catch(error) {
+      done(error, false);
+    }
   }));
