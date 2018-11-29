@@ -1,5 +1,5 @@
-# API Authentication with Node 
-This is the project files for Seald's Authentication and Haas  with Node series.
+# Seald Technical test
+This is the project files for Seald's Authentication and Haas with Node series.
 
 
 then checkout the branch as follow

@@ -37,9 +37,9 @@ module.exports = {
     },
     signIn: async (req, res, next) => {
         //Generate a token
-        console.log('req.user',req.user);
+        console.log('req.user',req.user); 
          const token = signToken(req.user);
-    res.status(200).json({ token });
+         res.status(200).json({ token });
         console.log('Successfull Login');
 
     },
@@ -50,5 +50,5 @@ module.exports = {
     },
  
 
-
+ 
 }

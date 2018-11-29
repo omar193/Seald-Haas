@@ -66,9 +66,7 @@ passport.use(new LocalStrategy({
       // If not, handle it
       if (!hash) {
         return done(null, false);
-      }
-  
-    
+      }   
       // Otherwise, return the user
       done(null, hash);
     } catch(error) {

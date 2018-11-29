@@ -2,12 +2,13 @@ const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/HaasSeald');
 
 const app = express();
-
+app.use(cors());
 //Middelware
 app.use(morgan('dev'));
 app.use(bodyParser.json());
@@ -21,7 +22,7 @@ app.use('/hashes', require('./routes/hashes'));
  
 
 //Start the server
-const port=process.env.PORT||3000;
+const port=process.env.PORT||5000;
 app.listen(port);
 console.log(`server is listening at ${port}`);
 
