@@ -13,10 +13,15 @@ signToken = user => {
 }
 
 module.exports = {
+    /*
+    *return 403 if the user already exists in the database
+    *return 200 if the user already not exists in the database and it was saved
+    *return 200 if the user already not exists in the database using callback done
+    *return fake token in res.json
+    */
     signUp: async (req, res, next) => {
         //getting username and password
         //req.value.body
-        console.log('contents of req.value.body', req.value.body);
         console.log('UsersController.signUp() called!');
         const { username, password } = req.value.body;
 
@@ -35,20 +40,30 @@ module.exports = {
         res.status(200).json({ token });
 
     },
+    /*
+     *return token when signIn Called
+     *return  fake token using rewire
+    */
     signIn: async (req, res, next) => {
-        //Generate a token
-        console.log('req.user',req.user); 
-         const token = signToken(req.user);
-         res.status(200).json({ token });
+        const { username, password } = req.value.body;
+        const userpass = await User.findOne({ username });
+        const token = signToken(userpass);
+
+        res.status(200).json({ token });
+
+
         console.log('Successfull Login');
 
     },
+     /*
+      *return ressource when called 
+     */
     secret: async (req, res, next) => {
         console.log('I managed to get here!');
         res.json({ secret: "resource" });
 
     },
- 
 
- 
+
+
 }
